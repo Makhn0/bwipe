@@ -1,3 +1,4 @@
+bwipe is a fork of nwipe,
 nwipe is a command that will securely erase disks using a variety of
 recognised methods.  It is a fork of the dwipe command used by
 Darik's Boot and Nuke (dban).  nwipe is included with partedmagic if you
