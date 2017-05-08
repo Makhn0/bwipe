@@ -64,8 +64,10 @@ const char* nwipe_gutmann_label    = "Gutmann Wipe";
 const char* nwipe_ops2_label       = "RCMP TSSIT OPS-II";
 const char* nwipe_random_label     = "PRNG Stream";
 const char* nwipe_zero_label       = "Quick Erase";
+const char* nwipe_1010_label    = "_1010 Erase";
 
 const char* nwipe_unknown_label    = "Unknown Method (FIXME)";
+
 
 const char* nwipe_method_label( void* method )
 {
@@ -80,6 +82,7 @@ const char* nwipe_method_label( void* method )
 	if( method == &nwipe_ops2       ) { return nwipe_ops2_label;       }
 	if( method == &nwipe_random     ) { return nwipe_random_label;     }
 	if( method == &nwipe_zero       ) { return nwipe_zero_label;       }
+	if( method == &nwipe_1010       ) { return nwipe_1010_label;       }
 
 	/* else */
 	return nwipe_unknown_label;
@@ -112,6 +115,31 @@ void *nwipe_zero( void *ptr )
     return NULL;
 } /* nwipe_zero */
 
+void *nwipe_1010( void *ptr )
+{
+/**
+ * Fill the device with 0xaa.
+ *
+ */
+
+ 	nwipe_context_t *c;
+ 	c = (nwipe_context_t *) ptr;
+
+	/* Do not nothing . */
+	nwipe_pattern_t patterns [] =
+	{
+		/*I hope this works*/
+		{ 0, 0xaa }
+	};
+
+	/* Run the method. */
+	c->result = nwipe_runmethod( c, patterns );
+
+	/* Finished. Set the thread ID to 0 so that the GUI knows */
+	c->thread = 0;
+
+    return NULL;
+} /* nwipe_1010*/
 
 
 void *nwipe_dod522022m( void *ptr )
